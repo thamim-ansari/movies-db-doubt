@@ -38,11 +38,7 @@
   display: flex;
   padding: 0px;
 }
-@media screen and (max-width: 768px) {
-  .header-nav-list {
-    display: none;
-  }
-}
+
 .header-nav-items {
   display: flex;
   font-family: 'Roboto';

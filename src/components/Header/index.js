@@ -5,21 +5,8 @@ import SearchContext from '../../context/SearchContext'
 import './index.css'
 
 const Header = () => {
-  const [navItemState, setNavItemStatus] = useState({
-    isMenuOpen: false,
-  })
   const [searchInput, setSearchInput] = useState('')
   const {setSearchContextInput} = useContext(SearchContext)
-  const {isMenuOpen} = navItemState
-  const mobileNavListClass = isMenuOpen
-    ? 'mobile-nav-list-container'
-    : 'mobile-nav-list-container-hide'
-
-  const onClickMenu = () =>
-    setNavItemStatus(prevState => ({
-      ...prevState,
-      isMenuOpen: !prevState.isMenuOpen,
-    }))
 
   const onClickSearchBtn = () => {
     setSearchContextInput(searchInput)
@@ -38,17 +25,23 @@ const Header = () => {
           <div className="header-content-container">
             <ul className="header-nav-list">
               <Link to="/" className="link-style">
-                <li className="header-nav-items">Popular</li>
+                <li className="header-nav-items">
+                  <h1>Popular</h1>
+                </li>
               </Link>
               <Link to="/top-rated" className="link-style">
-                <li className="header-nav-items">Top Rated</li>
+                <li className="header-nav-items">
+                  <h1>Top Rated</h1>
+                </li>
               </Link>
               <Link to="/upcoming" className="link-style">
-                <li className="header-nav-items">Upcoming</li>
+                <li className="header-nav-items">
+                  <h1>Upcoming</h1>
+                </li>
               </Link>
             </ul>
             <input
-              type="search"
+              type="text"
               placeholder="Search"
               onChange={onChangeSearchInput}
               value={searchInput}
@@ -63,29 +56,9 @@ const Header = () => {
                 search
               </button>
             </Link>
-            <button
-              type="button"
-              className="mobile-nav-button"
-              onClick={onClickMenu}
-            >
-              menu
-            </button>
           </div>
         </div>
       </nav>
-      <div className={mobileNavListClass}>
-        <ul className="mobile-nav-list">
-          <Link to="/" className="link-style">
-            <li className="mobile-nav-items">Popular</li>
-          </Link>
-          <Link to="/top-rated" className="link-style">
-            <li className="mobile-nav-items">Top Rated</li>
-          </Link>
-          <Link to="/upcoming" className="link-style">
-            <li className="mobile-nav-items">Upcoming</li>
-          </Link>
-        </ul>
-      </div>
     </>
   )
 }

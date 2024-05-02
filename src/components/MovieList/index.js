@@ -19,7 +19,7 @@ const MovieList = props => {
         />
         <CircleRating rating={rating} />
       </div>
-      <p className="movie-card-title">{title}</p>
+      <h1 className="movie-card-title">{title}</h1>
       <p className="movie-card-release-date">{releaseDate}</p>
       <Link to={`/movie-details/${id}`}>
         <button type="button" className="movie-card-view-details-btn">
