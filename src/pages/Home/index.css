@@ -1,0 +1,40 @@
+.home-bg-container {
+  background-color: #00010e;
+  min-height: 100vh;
+}
+.home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 80px;
+}
+@media screen and (min-width: 768px) {
+  .popular-movie-list-container {
+    width: 82%;
+  }
+}
+.popular-picks {
+  color: #fff;
+  font-family: 'Roboto';
+  font-size: 18px;
+  font-weight: 500;
+  align-self: flex-start;
+  margin-bottom: 20px;
+  margin-left: 8px;
+}
+@media screen and (min-width: 768px) {
+  .popular-picks {
+    font-size: 24px;
+  }
+}
+.popular-movie-list {
+  padding-left: 0px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+@media screen and (min-width: 768px) {
+  .popular-movie-list {
+    justify-content: flex-start;
+  }
+}

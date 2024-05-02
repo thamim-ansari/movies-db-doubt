@@ -1,0 +1,51 @@
+.top-rated-page-container {
+  background-color: #00010e;
+  min-height: 100vh;
+}
+.top-rated-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 60px;
+}
+@media screen and (min-width: 768px) {
+  .top-rated-container {
+    padding-top: 100px;
+  }
+}
+.top-rated-movie-list-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 90%;
+}
+@media screen and (min-width: 768px) {
+  .top-rated-movie-list-container {
+    width: 82%;
+  }
+}
+.top-rated-heading {
+  color: #fff;
+  font-family: 'Roboto';
+  font-size: 18px;
+  font-weight: 500;
+  align-self: flex-start;
+  margin-bottom: 20px;
+  margin-left: 8px;
+}
+@media screen and (min-width: 768px) {
+  .top-rated-heading {
+    font-size: 24px;
+  }
+}
+.top-rated-movie-list {
+  padding-left: 0px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+@media screen and (min-width: 768px) {
+  .top-rated-movie-list {
+    justify-content: flex-start;
+  }
+}
