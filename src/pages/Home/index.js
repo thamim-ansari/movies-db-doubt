@@ -5,7 +5,7 @@ import MovieList from '../../components/MovieList'
 import LoaderComponent from '../../components/Loader'
 import FailureView from '../../components/FailureView'
 import {getFormattedMovieListData} from '../../utils/utils'
-import Pagination from '../../components/pagination'
+import Pagination from '../../components/Pagination'
 import Footer from '../../components/Footer'
 
 import './index.css'
@@ -22,22 +22,11 @@ const Home = () => {
   const [homeApiStatus, setHomeApiStatus] = useState(
     homeApiStatusConstants.initial,
   )
-  const [currentPage, setCurrentPage] = useState(1)
-  const [moviesPerPage] = useState(12)
-  const indexOfLastMovie = currentPage * moviesPerPage
-  const indexOfFirstMovie = indexOfLastMovie - moviesPerPage
-  const currentMovies = popularMovieData.slice(
-    indexOfFirstMovie,
-    indexOfLastMovie,
-  )
-
-  const paginate = pageNumber => setCurrentPage(pageNumber)
-  const handleNextPage = () => setCurrentPage(prevPage => prevPage + 1)
-  const handlePrevPage = () => setCurrentPage(prevPage => prevPage - 1)
+  const [pageNumber, setPageNumber] = useState(1)
 
   const getPopularMovieData = async () => {
     setHomeApiStatus(homeApiStatusConstants.in_progress)
-    const popularMovieUrl = `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_MOVIE_API}&language=en-US&page=1`
+    const popularMovieUrl = `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_MOVIE_API}&language=en-US&page=${pageNumber}`
     const popularMovieResponse = await fetch(popularMovieUrl)
     if (popularMovieResponse.ok) {
       const popularMovieResponseData = await popularMovieResponse.json()
@@ -54,28 +43,31 @@ const Home = () => {
 
   useEffect(() => {
     getPopularMovieData()
-  }, [])
+  }, [pageNumber])
 
   const onRetry = () => {
     getPopularMovieData()
+  }
+
+  const onPrev = () => {
+    if (pageNumber > 1) {
+      setPageNumber(prev => prev - 1)
+    }
+  }
+
+  const onNext = () => {
+    setPageNumber(prev => prev + 1)
   }
 
   const renderPopularMovieListContainer = () => (
     <div className="popular-movie-list-container">
       <h1 className="popular-picks">Popular</h1>
       <ul className="popular-movie-list">
-        {currentMovies.map(eachData => (
+        {popularMovieData.map(eachData => (
           <MovieList key={eachData.id} popularMovieDetails={eachData} />
         ))}
       </ul>
-      <Pagination
-        currentPage={currentPage}
-        itemsPerPage={moviesPerPage}
-        totalItems={popularMovieData.length}
-        paginate={paginate}
-        handleNextPage={handleNextPage}
-        handlePrevPage={handlePrevPage}
-      />
+      <Pagination pageNumber={pageNumber} onPrev={onPrev} onNext={onNext} />
     </div>
   )
 

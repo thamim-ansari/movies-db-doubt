@@ -1,0 +1,25 @@
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.page-number {
+  color: #fff;
+  margin: 0px 5px;
+  font-size: 14px;
+}
+.pagination-btn {
+  background-color: #03ac13;
+  color: #fff;
+  font-family: 'Roboto';
+  font-size: 14px;
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: 1px solid #03ac13;
+  outline: none;
+  cursor: pointer;
+}
+.pagination-btn:hover {
+  color: #03ac13;
+  background-color: transparent;
+}

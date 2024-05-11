@@ -5,8 +5,8 @@ import MovieList from '../../components/MovieList'
 import FailureView from '../../components/FailureView'
 import LoaderComponent from '../../components/Loader'
 import {getFormattedMovieListData} from '../../utils/utils'
-import Pagination from '../../components/pagination'
 import Footer from '../../components/Footer'
+import Pagination from '../../components/Pagination'
 
 import './index.css'
 
@@ -22,22 +22,10 @@ const Upcoming = () => {
   const [upcomingMoviesApiStatus, setUpcomingMoviesApiStatus] = useState(
     upcomingMoviesApiStatusConstants.initial,
   )
-  const [currentPage, setCurrentPage] = useState(1)
-  const [moviesPerPage] = useState(12)
-  const indexOfLastMovie = currentPage * moviesPerPage
-  const indexOfFirstMovie = indexOfLastMovie - moviesPerPage
-  const currentMovies = upcomingMoviesData.slice(
-    indexOfFirstMovie,
-    indexOfLastMovie,
-  )
-
-  const paginate = pageNumber => setCurrentPage(pageNumber)
-  const handleNextPage = () => setCurrentPage(prevPage => prevPage + 1)
-  const handlePrevPage = () => setCurrentPage(prevPage => prevPage - 1)
-
+  const [pageNumber, setPageNumber] = useState(1)
   const getUpcomingMovieData = async () => {
     setUpcomingMoviesApiStatus(upcomingMoviesApiStatusConstants.in_progress)
-    const upcomingMoviesApiUrl = `https://api.themoviedb.org/3/movie/upcoming?api_key=${process.env.REACT_APP_MOVIE_API}&language=en-US&page=1`
+    const upcomingMoviesApiUrl = `https://api.themoviedb.org/3/movie/upcoming?api_key=${process.env.REACT_APP_MOVIE_API}&language=en-US&page=${pageNumber}`
     const upcomingMoviesApiResponse = await fetch(upcomingMoviesApiUrl)
     if (upcomingMoviesApiResponse.ok) {
       const upcomingMoviesApiResponseData = await upcomingMoviesApiResponse.json()
@@ -53,30 +41,31 @@ const Upcoming = () => {
 
   useEffect(() => {
     getUpcomingMovieData()
-  }, [])
+  }, [pageNumber])
 
   const onRetry = () => {
     getUpcomingMovieData()
   }
+  const onPrev = () => {
+    if (pageNumber > 1) {
+      setPageNumber(prev => prev - 1)
+    }
+  }
 
+  const onNext = () => {
+    setPageNumber(prev => prev + 1)
+  }
   const renderUpcomingMoviesContainer = () => (
     <div className="upcoming-movies-container">
       <div className="upcoming-movies-list-container">
         <h1 className="upcoming-movies-heading">Upcoming</h1>
         <ul className="upcoming-movies-list">
-          {currentMovies.map(eachData => (
+          {upcomingMoviesData.map(eachData => (
             <MovieList key={eachData.id} popularMovieDetails={eachData} />
           ))}
         </ul>
+        <Pagination pageNumber={pageNumber} onPrev={onPrev} onNext={onNext} />
       </div>
-      <Pagination
-        currentPage={currentPage}
-        itemsPerPage={moviesPerPage}
-        totalItems={upcomingMoviesData.length}
-        paginate={paginate}
-        handleNextPage={handleNextPage}
-        handlePrevPage={handlePrevPage}
-      />
     </div>
   )
 
